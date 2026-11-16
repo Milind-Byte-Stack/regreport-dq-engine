@@ -1,0 +1,65 @@
+# MiFIR rule pack (transaction reporting, RTS 22 style).
+# Field names are a simplified, readable subset of the RTS 22 fields.
+regime: MiFIR
+version: "1.0"
+description: Data-quality checks for MiFIR transaction reports (synthetic data).
+
+rules:
+  - id: MIFIR-001
+    name: ISIN check digit
+    check: isin
+    fields: [isin]
+    severity: HIGH
+    message: >-
+      Instrument ISIN is not a valid ISO 6166 code (12 characters, last
+      character must be the correct check digit).
+
+  - id: MIFIR-002
+    name: Venue is a valid MIC or XOFF/XXXX
+    check: in_reference
+    fields: [venue]
+    params:
+      list: mic
+      also_allowed: [XOFF, XXXX]
+    severity: HIGH
+    message: >-
+      Venue is not a known ISO 10383 MIC. Use the segment MIC, XOFF for
+      off-venue trades in instruments traded on a venue, or XXXX where
+      applicable.
+
+  - id: MIFIR-003
+    name: Trading date-time in UTC
+    check: utc_timestamp
+    fields: [trading_datetime]
+    severity: MEDIUM
+    message: >-
+      Trading date-time must be ISO 8601 in UTC, e.g. 2026-11-09T09:30:15.123Z.
+
+  - id: MIFIR-004
+    name: Price and quantity positive
+    check: positive_number
+    fields: [price, quantity]
+    severity: HIGH
+    message: Price or quantity is missing, zero or negative.
+
+  - id: MIFIR-005
+    name: Price currency is ISO 4217
+    check: in_reference
+    fields: [price_currency]
+    params:
+      list: currency
+    severity: MEDIUM
+    message: Price currency is not a valid ISO 4217 code.
+
+  - id: MIFIR-006
+    name: Buyer/seller ID matches ID type
+    checks:
+      - check: id_matches_type
+        fields: [buyer_id_type, buyer_id]
+      - check: id_matches_type
+        fields: [seller_id_type, seller_id]
+    severity: HIGH
+    message: >-
+      Buyer or seller identifier does not match its declared type (LEI must be
+      a valid LEI; CONCAT must be country + birth date + 5 letters first name
+      + 5 letters surname; NIDN/CCPT must start with a country code).

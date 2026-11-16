@@ -1,0 +1,81 @@
+# EMIR rule pack (derivatives reporting).
+# Field names are a simplified, readable subset of EMIR Refit fields.
+# Each rule: id, name, severity (HIGH/MEDIUM/LOW), message, and either
+#   check + fields (+ params)   or   checks: [ {check, fields, params}, ... ]
+# A record fails the rule if ANY of its checks fail.
+regime: EMIR
+version: "1.0"
+description: Data-quality checks for EMIR derivative trade reports (synthetic data).
+
+rules:
+  - id: EMIR-001
+    name: LEI format and check digits
+    check: lei
+    fields: [reporting_cpty_lei, other_cpty_lei]
+    severity: HIGH
+    message: >-
+      Counterparty LEI is not a valid ISO 17442 code (must be 20 characters
+      with correct MOD 97-10 check digits).
+
+  - id: EMIR-002
+    name: UTI present and unique
+    check: unique
+    fields: [uti]
+    severity: HIGH
+    message: >-
+      UTI is missing or appears on more than one report. Each trade needs one
+      unique UTI so both sides can pair and match.
+
+  - id: EMIR-003
+    name: Valuation amount and date present
+    check: required
+    fields: [valuation_amount, valuation_date]
+    severity: MEDIUM
+    applies_when:
+      action_type: [NEWT, MODI, VALU]
+    message: >-
+      Valuation amount or valuation date is missing for an outstanding trade.
+      Open positions need a daily mark-to-market valuation.
+
+  - id: EMIR-004
+    name: Collateral fields consistent
+    check: conditional_required
+    fields: [collateral_portfolio_code]
+    params:
+      when_field: collateral_portfolio_indicator
+      when_value: "TRUE"
+      blank_otherwise: true
+    severity: MEDIUM
+    message: >-
+      Collateral portfolio code does not match the portfolio indicator. If the
+      trade is collateralised at portfolio level the code is required;
+      otherwise it must be blank.
+
+  - id: EMIR-005
+    name: Mandatory fields complete
+    check: required
+    fields:
+      - report_date
+      - action_type
+      - asset_class
+      - product_type
+      - execution_timestamp
+      - maturity_date
+      - notional
+      - notional_currency
+    severity: HIGH
+    message: One or more mandatory fields are blank.
+
+  - id: EMIR-006
+    name: Counterparty sides consistent
+    checks:
+      - check: allowed_values
+        fields: [direction]
+        params: {values: [BYER, SLLR]}
+      - check: fields_differ
+        fields: [reporting_cpty_lei, other_cpty_lei]
+    severity: HIGH
+    message: >-
+      Counterparty side is invalid: direction must be BYER or SLLR, and the
+      reporting counterparty cannot be the same entity as the other
+      counterparty.

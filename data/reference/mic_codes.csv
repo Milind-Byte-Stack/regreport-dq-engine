@@ -1,0 +1,33 @@
+mic,name,country
+XLON,London Stock Exchange,GB
+XPAR,Euronext Paris,FR
+XAMS,Euronext Amsterdam,NL
+XBRU,Euronext Brussels,BE
+XLIS,Euronext Lisbon,PT
+XDUB,Euronext Dublin,IE
+XMIL,Borsa Italiana,IT
+XETR,Xetra,DE
+XFRA,Boerse Frankfurt,DE
+XMAD,Bolsa de Madrid,ES
+XSTO,Nasdaq Stockholm,SE
+XHEL,Nasdaq Helsinki,FI
+XCSE,Nasdaq Copenhagen,DK
+XOSL,Oslo Bors,NO
+XSWX,SIX Swiss Exchange,CH
+XWBO,Wiener Boerse,AT
+XWAR,Warsaw Stock Exchange,PL
+XPRA,Prague Stock Exchange,CZ
+XBUD,Budapest Stock Exchange,HU
+XATH,Athens Exchange,GR
+BATE,Cboe Europe BXE,NL
+CHIX,Cboe Europe CXE,NL
+TRQX,Turquoise,GB
+AQXE,Aquis Exchange,FR
+XNYS,New York Stock Exchange,US
+XNAS,Nasdaq,US
+XTSE,Toronto Stock Exchange,CA
+XTKS,Tokyo Stock Exchange,JP
+XHKG,Hong Kong Exchanges,HK
+XASX,ASX,AU
+XBOM,BSE,IN
+XNSE,National Stock Exchange of India,IN

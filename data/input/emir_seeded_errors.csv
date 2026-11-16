@@ -1,0 +1,29 @@
+record_id,error_type,expected_rule
+E00343,lei_bad_check_digits,EMIR-001
+E00283,lei_bad_length,EMIR-001
+E00174,uti_missing,EMIR-002
+E00423,uti_duplicate (original),EMIR-002
+E00050,uti_duplicate,EMIR-002
+E00100,valuation_missing,EMIR-003
+E00105,collateral_code_missing,EMIR-004
+E00371,collateral_code_unexpected,EMIR-004
+E00055,mandatory_blank,EMIR-005
+E00115,direction_invalid,EMIR-006
+E00336,same_counterparty,EMIR-006
+E00276,lei_bad_check_digits,EMIR-001
+E00390,lei_bad_length,EMIR-001
+E00436,uti_missing,EMIR-002
+E00290,uti_duplicate (original),EMIR-002
+E00021,uti_duplicate,EMIR-002
+E00023,valuation_missing,EMIR-003
+E00140,collateral_code_missing,EMIR-004
+E00294,collateral_code_unexpected,EMIR-004
+E00274,mandatory_blank,EMIR-005
+E00437,direction_invalid,EMIR-006
+E00361,same_counterparty,EMIR-006
+E00439,lei_bad_check_digits,EMIR-001
+E00081,lei_bad_length,EMIR-001
+E00033,uti_missing,EMIR-002
+E00399,uti_duplicate (original),EMIR-002
+E00420,uti_duplicate,EMIR-002
+E00329,valuation_missing,EMIR-003
